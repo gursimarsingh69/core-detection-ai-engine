@@ -7,6 +7,7 @@ import cv2
 
 # Import app to use TestClient
 import main
+import config
 
 client = TestClient(main.app)
 
@@ -22,8 +23,8 @@ def create_sample_image(filename, text, bg_color, size=(800, 600)):
 
 def main_seed():
     print("Clearing out existing db...")
-    if os.path.exists(main.DB_FILE):
-         os.remove(main.DB_FILE)
+    if os.path.exists(config.DB_FILE):
+         os.remove(config.DB_FILE)
     
     # 1. Create a logo
     create_sample_image("logo.jpg", "SPORTS LOGO", bg_color=(255, 0, 0), size=(300, 300))
