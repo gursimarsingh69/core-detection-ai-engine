@@ -21,4 +21,5 @@ db.json
 # Ignore test artifacts
 *.jpg
 *.png
+*.jpeg
 out.txt

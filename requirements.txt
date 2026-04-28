@@ -4,3 +4,5 @@ pillow
 imagehash
 opencv-python-headless
 python-multipart
+google-generativeai
+python-dotenv

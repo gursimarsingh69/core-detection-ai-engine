@@ -36,3 +36,29 @@ def check_screenshot_borders(img_path):
     if (top_var < 10 and bottom_var < 10) or (left_var < 10 and right_var < 10):
         return True
     return False
+
+def orb_feature_match(img1_path, img2_path):
+    img1 = cv2.imread(img1_path, cv2.IMREAD_GRAYSCALE)
+    img2 = cv2.imread(img2_path, cv2.IMREAD_GRAYSCALE)
+    
+    if img1 is None or img2 is None:
+        return 0
+        
+    # Resize to speed up and normalize feature detection
+    img1 = cv2.resize(img1, (640, 480))
+    img2 = cv2.resize(img2, (640, 480))
+        
+    orb = cv2.ORB_create(nfeatures=500)
+    kp1, des1 = orb.detectAndCompute(img1, None)
+    kp2, des2 = orb.detectAndCompute(img2, None)
+    
+    if des1 is None or des2 is None:
+        return 0
+        
+    bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+    matches = bf.match(des1, des2)
+    
+    # Count "good" matches (distance < 50 is usually a solid feature match for ORB)
+    good_matches = [m for m in matches if m.distance < 50]
+    
+    return len(good_matches)
